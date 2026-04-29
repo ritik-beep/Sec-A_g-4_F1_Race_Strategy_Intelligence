@@ -29,7 +29,7 @@ Before building, confirm these columns exist in your files:
 | `lat`, `lng` | *(not in master_fact — use circuit_strategy_profile)* | 4 |
 | `cluster_label` | Color, filter on all | 2, 3, 4 |
 
-### circuit_strategy_profile.csv (78 rows)
+### circuit_strategy_profile.csv (77 rows)
 | Column | Used In | Dashboard |
 |--------|---------|-----------|
 | `circuit_name` | Labels, tooltip | 4 |
@@ -219,7 +219,7 @@ These facts come directly from your data files — use them in your PPT:
 | Fact | Source | Value |
 |------|--------|-------|
 | Total F1 race entries in dataset | master_fact.csv rows | 27,304 |
-| Total unique circuits analyzed | circuit_strategy_profile.csv rows | 78 |
+| Total unique circuits analyzed | circuit_strategy_profile.csv rows | 77 |
 | Constructor-season records | constructor_season_kpis.csv rows | 1,132 |
 | Data span | year column in master_fact | 1950 – 2026 |
 | Circuit archetypes identified | cluster_label unique values | 3 (Qualifying/Strategy/Mixed) |

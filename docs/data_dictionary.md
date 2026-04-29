@@ -239,7 +239,7 @@ This document provides an exhaustive, row-by-row breakdown of every single colum
 # Section: PROCESSED DATA
 
 ## circuit_strategy_profile.csv
-*Grain: 78 rows, 19 columns*
+*Grain: 77 rows, 19 columns*
 
 | Column | Dtype | Description | Example | Nulls |
 |:---|:---|:---|:---|:---|

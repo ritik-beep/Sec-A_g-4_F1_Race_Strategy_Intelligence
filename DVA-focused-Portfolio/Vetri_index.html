@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetri | Data Visualization & AI Portfolio</title>
+    <meta name="description" content="Portfolio of Vetriselvan R - Data Visualization & Analytics Specialist. Exploring F1 strategy, Spatiotemporal forecasting, and AI-driven insights.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #05070a;
+            --surface: #0f172a;
+            --surface-hover: #1e293b;
+            --border: #334155;
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.3);
+            --secondary: #818cf8;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            background: rgba(5, 7, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span { color: var(--accent); }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 12rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -5px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            border-color: var(--text-secondary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .stat-val {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ─── DVA DASHBOARD SECTION ─── */
+        .section-padding { padding: 8rem 0; }
+
+        .section-title {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Look */
+        .dva-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 3rem;
+            transition: var(--transition);
+        }
+
+        .dva-card:hover {
+            border-color: var(--secondary);
+            box-shadow: var(--card-shadow);
+        }
+
+        .dva-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .dva-badge {
+            padding: 0.2rem 0.8rem;
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--secondary);
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid rgba(129, 140, 248, 0.3);
+        }
+
+        .dva-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            padding: 2.5rem;
+        }
+
+        .dva-visual {
+            background: #000;
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+
+        .chart-mock {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chart-bar {
+            height: 12px;
+            background: var(--accent);
+            border-radius: 4px;
+            opacity: 0.8;
+            transition: width 1s ease-out;
+        }
+
+        .dva-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .dva-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .kpi-item {
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .kpi-name { font-size: 0.75rem; color: var(--text-secondary); display: block; }
+        .kpi-val { font-size: 1rem; font-weight: 700; }
+
+        /* ─── PROJECT GRID ─── */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            background: var(--surface-hover);
+            border-color: var(--text-secondary);
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .card h3 { margin-bottom: 1rem; }
+        .card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+
+        .card-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ─── SKILLS ─── */
+        .skills-section {
+            background: #0a0f1a;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .skill-group h4 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-badge {
+            background: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .skill-badge:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 6rem 0 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-link {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .social-link:hover { color: var(--accent); }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate { animation: fadeIn 0.8s ease-out forwards; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        /* Mobile */
+        @media (max-width: 968px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero h1 { font-size: 3rem; }
+            .hero p { margin: 0 auto 2rem; }
+            .hero-actions { justify-content: center; }
+            .dva-content { grid-template-columns: 1fr; }
+            .dva-visual { min-height: 200px; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">VETRI<span>.DVA</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text animate">
+                <span class="hero-tag">Data Visualization & Analytics</span>
+                <h1>Turning Raw Data into <span>Strategic Assets</span>.</h1>
+                <p>B.Tech CS & AI student at Newton School of Technology. Specializing in spatiotemporal forecasting, financial intelligence, and interactive dashboards.</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="https://github.com/mitul-bhatia/Sec-A_g-4_F1_Race_Strategy_Intelligence" target="_blank" class="btn btn-secondary">Current Research</a>
+                </div>
+            </div>
+            <div class="hero-stats animate delay-1">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-val mono">726K+</div>
+                        <div class="stat-label">Data Points</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val mono">95%</div>
+                        <div class="stat-label">Model Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val mono">10+</div>
+                        <div class="stat-label">DVA KPIs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val mono">8.1</div>
+                        <div class="stat-label">CGPA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured DVA Project (F1) -->
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <div class="section-title animate">
+                <h2>Featured Data Analytics</h2>
+                <p>Comprehensive end-to-end analytical pipelines and visual stories.</p>
+            </div>
+
+            <div class="dva-card animate delay-1">
+                <div class="dva-header">
+                    <div class="mono" style="font-size: 0.9rem; color: var(--text-secondary);">CASE_STUDY // F1_STRATEGY_INTELLIGENCE</div>
+                    <div class="dva-badge">DVA CAPSTONE</div>
+                </div>
+                <div class="dva-content">
+                    <div class="dva-visual">
+                        <div class="chart-mock">
+                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-secondary); margin-bottom:0.5rem;">
+                                <span>Grid Position</span>
+                                <span>Finish Position</span>
+                            </div>
+                            <div class="chart-bar" style="width: 90%;"></div>
+                            <div class="chart-bar" style="width: 75%; background: var(--secondary);"></div>
+                            <div class="chart-bar" style="width: 60%;"></div>
+                            <div class="chart-bar" style="width: 85%; background: var(--secondary);"></div>
+                            <div class="chart-bar" style="width: 40%;"></div>
+                            <div style="margin-top:auto; font-size:0.6rem; color:var(--accent); text-align:right;">LIVE_FEED: PROCESSING_ERGAS_DB...</div>
+                        </div>
+                    </div>
+                    <div class="dva-info">
+                        <h3>F1 Race Strategy Intelligence</h3>
+                        <div class="dva-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Tableau</span>
+                            <span class="tag">ETL Pipeline</span>
+                            <span class="tag">Hypothesis Testing</span>
+                        </div>
+                        <p>Analyzing how strategic execution—qualifying precision, pit stop efficiency, and circuit tactics—drives Constructor Championship outcomes. Processed 76 F1 seasons and 111 attributes.</p>
+                        <div class="kpi-grid">
+                            <div class="kpi-item">
+                                <span class="kpi-name">KPI: Grid-to-Finish Delta</span>
+                                <span class="kpi-val mono">+4.2 Positions</span>
+                            </div>
+                            <div class="kpi-item">
+                                <span class="kpi-name">KPI: Win Conv. from Pole</span>
+                                <span class="kpi-val mono">68.4% Avg</span>
+                            </div>
+                        </div>
+                        <a href="https://github.com/mitul-bhatia/Sec-A_g-4_F1_Race_Strategy_Intelligence" target="_blank" class="btn btn-secondary" style="margin-top: 2rem; width: 100%; justify-content: center;">Explore Notebooks</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Retail Data Intelligence -->
+            <div class="dva-card animate delay-2">
+                <div class="dva-header">
+                    <div class="mono" style="font-size: 0.9rem; color: var(--text-secondary);">ANALYTICS // BIG_MART</div>
+                    <div class="dva-badge">ENTERPRISE BI</div>
+                </div>
+                <div class="dva-content">
+                    <div class="dva-visual">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;"></div>
+                            <div class="mono" style="font-size: 0.8rem; color: var(--accent);">PIVOT ARCHITECTURE</div>
+                            <div style="margin-top: 1rem; width: 150px; height: 150px; border: 2px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px;">
+                                <div style="width: 100%; height: 25px; background: var(--accent); margin-bottom: 10px; opacity: 0.9;"></div>
+                                <div style="width: 75%; height: 25px; background: var(--accent); margin-bottom: 10px; opacity: 0.7;"></div>
+                                <div style="width: 50%; height: 25px; background: var(--accent); opacity: 0.5;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dva-info">
+                        <h3>Retail Sales Data Intelligence</h3>
+                        <div class="dva-tags">
+                            <span class="tag">Excel</span>
+                            <span class="tag">Tableau</span>
+                            <span class="tag">Data Cleaning</span>
+                            <span class="tag">Pivot Tables</span>
+                        </div>
+                        <p>Enterprise-grade data intelligence initiative on Big Mart sales. Systematically cleaned and validated 8,522 records, built 25+ dimensional pivot tables, and engineered 16+ custom metrics.</p>
+                        <div class="kpi-grid">
+                            <div class="kpi-item">
+                                <span class="kpi-name">Records Cleaned</span>
+                                <span class="kpi-val mono">8,522 (100%)</span>
+                            </div>
+                            <div class="kpi-item">
+                                <span class="kpi-name">Analytics Built</span>
+                                <span class="kpi-val mono">25+ Pivot Views</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1.5rem;">
+                            <a href="https://github.com/sanath-2512/SecA-G10" target="_blank" class="btn btn-secondary">View Repository ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Projects Grid -->
+    <section class="section-padding" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Analytical Repositories</h2>
+                <p>A collection of tools and insights from finance to healthcare.</p>
+            </div>
+            <div class="project-grid">
+                <!-- Missingno -->
+                <div class="card">
+                    <div class="card-icon"></div>
+                    <div class="mono" style="font-size: 0.7rem; color: var(--accent); margin-bottom: 0.5rem;">DATAVIZ // OPEN_SOURCE</div>
+                    <h3>Missingno: Data Visualization</h3>
+                    <p>A flexible and easy-to-use missing data visualization module for Python. Built on top of matplotlib and seaborn, it allows for quick visual summaries of dataset completeness.</p>
+                    <div class="dva-tags" style="margin-bottom: 1rem;">
+                        <span class="tag">Python</span> <span class="tag">Matplotlib</span> <span class="tag">Data Visualization</span>
+                    </div>
+                    <a href="https://github.com/ResidentMario/missingno" class="card-link" target="_blank">View Repository ↗</a>
+                </div>
+
+                <!-- YData Profiling -->
+                <div class="card">
+                    <div class="card-icon"></div>
+                    <div class="mono" style="font-size: 0.7rem; color: var(--accent); margin-bottom: 0.5rem;">ANALYTICS // EDA_TOOL</div>
+                    <h3>YData Profiling: Automated EDA</h3>
+                    <p>Automated profiling tool for exploratory data analysis. Generates comprehensive HTML reports from pandas DataFrames, including missing values, correlations, and descriptive statistics.</p>
+                    <div class="dva-tags" style="margin-bottom: 1rem;">
+                        <span class="tag">Python</span> <span class="tag">Pandas</span> <span class="tag">EDA</span>
+                    </div>
+                    <a href="https://github.com/ydataai/ydata-profiling" class="card-link" target="_blank">View Repository ↗</a>
+                </div>
+
+                <!-- Graphic Walker -->
+                <div class="card">
+                    <div class="card-icon"></div>
+                    <div class="mono" style="font-size: 0.7rem; color: var(--accent); margin-bottom: 0.5rem;">BI // TABLEAU_ALTERNATIVE</div>
+                    <h3>Graphic Walker: Visual Analytics</h3>
+                    <p>An open-source alternative to Tableau. An embeddable, interactive visual analytics component for deep data exploration and visualization in web environments.</p>
+                    <div class="dva-tags" style="margin-bottom: 1rem;">
+                        <span class="tag">React</span> <span class="tag">Data Visualization</span> <span class="tag">BI Dashboards</span>
+                    </div>
+                    <a href="https://github.com/Kanaries/graphic-walker" class="card-link" target="_blank">View Repository ↗</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section-padding skills-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Analytical Arsenal</h2>
+                <p>The tech stack I use to solve complex data problems.</p>
+            </div>
+            <div class="skills-container">
+                <div class="skill-group">
+                    <h4>Data Analysis & Processing</h4>
+                    <div class="skill-list">
+                        <span class="skill-badge">Python</span>
+                        <span class="skill-badge">Pandas</span>
+                        <span class="skill-badge">NumPy</span>
+                        <span class="skill-badge">SciPy</span>
+                        <span class="skill-badge">Statsmodels</span>
+                        <span class="skill-badge">SQL</span>
+                        <span class="skill-badge">ETL Pipelines</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Visualization & BI</h4>
+                    <div class="skill-list">
+                        <span class="skill-badge">Tableau</span>
+                        <span class="skill-badge">Power BI</span>
+                        <span class="skill-badge">Matplotlib</span>
+                        <span class="skill-badge">Seaborn</span>
+                        <span class="skill-badge">Plotly</span>
+                        <span class="skill-badge">Excel (Advanced)</span>
+                        <span class="skill-badge">Google Sheets</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4>Domain Analytics</h4>
+                    <div class="skill-list">
+                        <span class="skill-badge">Financial Modeling</span>
+                        <span class="skill-badge">Sports Analytics</span>
+                        <span class="skill-badge">Healthcare Analytics</span>
+                        <span class="skill-badge">Retail Data Intelligence</span>
+                        <span class="skill-badge">Statistical Hypothesis Testing</span>
+                        <span class="skill-badge">KPI Design</span>
+                        <span class="skill-badge">EDA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certs -->
+    <section id="experience" class="section-padding">
+        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+            <div>
+                <div class="section-title" style="text-align: left; margin-bottom: 2rem;">
+                    <h2>Education</h2>
+                </div>
+                <div class="card" style="padding: 1.5rem; margin-bottom: 1rem;">
+                    <h4 style="color: var(--accent);">B.Tech Computer Science & AI</h4>
+                    <p style="margin-bottom: 0.5rem;">Newton School of Technology, Rishihood University</p>
+                    <div class="mono" style="font-size: 0.8rem; color: var(--text-secondary);">2024 — PRESENT | CGPA: 8.1</div>
+                </div>
+            </div>
+            <div>
+                <div class="section-title" style="text-align: left; margin-bottom: 2rem;">
+                    <h2>Certifications</h2>
+                </div>
+                <div class="skill-list">
+                    <span class="skill-badge">Machine Learning (Columbia+)</span>
+                    <span class="skill-badge">Generative AI for Data Science (Microsoft)</span>
+                    <span class="skill-badge">Prompt Engineering (Columbia+)</span>
+                    <span class="skill-badge">Back-End with Node.js (IBM)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Footer -->
+    <footer id="contact">
+        <div class="container">
+            <h2>Let's build something <span>insightful</span>.</h2>
+            <p style="color: var(--text-secondary); margin-top: 1rem; margin-bottom: 3rem;">Always open to discussing data strategy, AI research, and high-stakes analytics.</p>
+            
+            <div class="footer-social">
+                <a href="https://github.com/vetri-78640" target="_blank" class="social-link">GitHub</a>
+                <a href="https://www.linkedin.com/in/vetriselvan-r/" target="_blank" class="social-link">LinkedIn</a>
+                <a href="https://www.instagram.com/im.vetri/" target="_blank" class="social-link">Instagram</a>
+            </div>
+
+            <p class="copyright">
+                &copy; <span id="year"></span> Vetriselvan R.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Simple animation trigger on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .dva-card, .section-title').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

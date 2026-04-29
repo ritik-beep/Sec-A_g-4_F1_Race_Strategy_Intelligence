@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- HERO BANNER -->
-<img src="assets/f1_telemetry_banner.png" alt="F1 Race Strategy Intelligence — Telemetry & Analytics" width="100%" />
+<img src="assets/banner.png" alt="F1 Race Strategy Intelligence — Telemetry & Analytics" width="100%" />
 
 <br/>
 
@@ -107,15 +107,17 @@ This analysis is designed to empower **Race Strategists** to:
 
 <div align="center">
 
-| Domain | Role | Owner | Key Responsibilities | GitHub |
-| :--- | :--- | :--- | :--- | :---: |
-| **Project Management** | **Project Lead** | Mitul Bhatia | Overseeing project execution, ensuring milestones and cross-functional alignment | [![GitHub](https://img.shields.io/badge/-mitul--bhatia-181717?style=flat-square&logo=github)](https://github.com/mitul-bhatia) |
-| **Data Architecture** | **Data Lead** | Ramani Dhruv Dineshbhai | Structuring the database relations, designing KPIs and dataset validation | [![GitHub](https://img.shields.io/badge/-DhruvR--16-181717?style=flat-square&logo=github)](https://github.com/DhruvR-16) |
-| **Data Pipelines** | **ETL Lead** | Vetriselvan R | Implementing data extraction (NB01) & cleaning processes (NB02 & NB05) | [![GitHub](https://img.shields.io/badge/-Vetri--78640-181717?style=flat-square&logo=github)](https://github.com/Vetri-78640) |
-| **Analytics Models** | **Analysis Lead** | Agrim Kumar Malhotra | Driving statistical tracking, EDA (NB03), modeling & regressions (NB04) | [![GitHub](https://img.shields.io/badge/-Agrim--2007-181717?style=flat-square&logo=github)](https://github.com/Agrim-2007) |
-| **BI & Visuals** | **Visualization Lead** | Kushal Sarkar | Crafting the Tableau Dashboards, preparing the visual layout reference | [![GitHub](https://img.shields.io/badge/-Kushal425-181717?style=flat-square&logo=github)](https://github.com/Kushal425) |
-| **Domain Expertise** | **Strategy Lead** | Ritik Ranjan | Guiding the business insights, track strategy profiling (NB06) and findings | [![GitHub](https://img.shields.io/badge/-ritik--beep-181717?style=flat-square&logo=github)](https://github.com/ritik-beep) |
-| **Documentation** | **PPT & Quality Lead** | Palaparthi Harshakarthikeya | Final project report drafting, presentation deck and quality checks | [![GitHub](https://img.shields.io/badge/-HARSHAKARTHIKEYA1510-181717?style=flat-square&logo=github)](https://github.com/HARSHAKARTHIKEYA1510) |
+| Team Member | Dataset & Sourcing | ETL & Cleaning | EDA & Analysis | Statistical Analysis | Tableau Dashboard | Report Writing | PPT & Viva |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Mitul Bhatia (Lead)** | ✔️ | ✔️ | ✔️ | ✔️ | | ✔️ | ✔️ |
+| **Kushal Sarkar** | | | | ✔️ | ✔️ | ✔️ | ✔️ |
+| **Ramani Dhruv D.** | ✔️ | ✔️ | ✔️ | | | | ✔️ |
+| **Vetriselvan R** | ✔️ | ✔️ | | | | ✔️ | ✔️ |
+| **Agrim K. Malhotra**| | | ✔️ | ✔️ | | | ✔️ |
+| **Ritik Ranjan** | | | | ✔️ | | ✔️ | ✔️ |
+| **Palaparthi H.** | | | ✔️ | ✔️ | | | ✔️ |
+
+*Note: As Team Lead, Mitul Bhatia oversaw and actively contributed to all technical and analytical aspects of the project, with the exception of the Tableau Dashboard creation which was led by Kushal Sarkar.*
 
 </div>
 

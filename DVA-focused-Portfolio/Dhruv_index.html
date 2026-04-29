@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dhruv Ramani (DhruvR-16)</title>
+    <style>
+        /* GitHub Dark Mode Variables - EXACTLY from demo.html */
+        :root {
+            --gh-bg: #0d1117;
+            --gh-bg-secondary: #161b22;
+            --gh-border: #30363d;
+            --gh-text-main: #c9d1d9;
+            --gh-text-muted: #8b949e;
+            --gh-link: #58a6ff;
+            --gh-btn-bg: #21262d;
+            --gh-btn-hover: #30363d;
+            --gh-btn-primary: #238636;
+            --gh-btn-primary-hover: #2ea043;
+            --gh-green: #2ea043;
+            --gh-orange: #e34c26;
+            --gh-yellow: #e3b341;
+            
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--gh-bg);
+            color: var(--gh-text-main);
+            line-height: 1.5;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: var(--gh-link); }
+        a:hover { text-decoration: underline; }
+
+        /* --- HEADER --- */
+        header {
+            background-color: #010409;
+            padding: 16px;
+            border-bottom: 1px solid var(--gh-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 16px; width: 100%;}
+        .header-logo svg { fill: white; width: 32px; height: 32px; }
+
+        /* --- MAIN LAYOUT --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px;
+            display: flex;
+            gap: 24px;
+            flex-grow: 1;
+        }
+
+        /* --- SIDEBAR (Profile) --- */
+        .sidebar { width: 296px; flex-shrink: 0; }
+        .sidebar-header { display: flex; flex-direction: column; }
+        .avatar {
+            width: 100%; max-width: 220px;
+            height: auto; aspect-ratio: 1;
+            border-radius: 50%; border: 1px solid var(--gh-border); 
+            margin-bottom: 16px; object-fit: cover;
+        }
+        .vcard-names { margin-bottom: 16px; }
+        .vcard-fullname { font-size: 24px; font-weight: 600; line-height: 1.25; color: var(--gh-text-main); }
+        .vcard-username { font-size: 20px; font-weight: 300; line-height: 1.25; color: var(--gh-text-muted); }
+        .user-profile-bio { margin-bottom: 16px; font-size: 16px; color: var(--gh-text-main); }
+        
+        .btn-profile {
+            display: block; width: 100%; text-align: center;
+            background: var(--gh-btn-bg); border: 1px solid var(--gh-border);
+            color: var(--gh-text-main); padding: 5px 16px; border-radius: 6px;
+            font-weight: 500; cursor: pointer; transition: 0.2s; margin-bottom: 16px;
+        }
+        .btn-profile:hover { background: var(--gh-btn-hover); text-decoration: none;}
+
+        .vcard-details { list-style: none; margin-bottom: 24px; border-bottom: 1px solid var(--gh-border); padding-bottom: 16px;}
+        .vcard-details li { display: flex; align-items: center; gap: 8px; margin-top: 4px; color: var(--gh-text-main); font-size: 14px; word-break: break-all;}
+        .vcard-details svg { fill: var(--gh-text-muted); width: 16px; height: 16px; flex-shrink: 0;}
+
+        .skills-section h2 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .skills-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+        .badge {
+            border: 1px solid var(--gh-border); padding: 2px 10px; border-radius: 2em;
+            font-size: 12px; font-weight: 500; color: var(--gh-text-muted); white-space: nowrap;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .content { flex-grow: 1; min-width: 0; }
+        
+        /* Tabs */
+        .UnderlineNav {
+            display: flex; border-bottom: 1px solid var(--gh-border); margin-bottom: 20px; gap: 8px;
+        }
+        .UnderlineNav-item {
+            padding: 8px 16px; font-size: 14px; color: var(--gh-text-main); cursor: default;
+            border-bottom: 2px solid #f78166; display: flex; align-items: center; gap: 8px; font-weight: 600;
+        }
+        .UnderlineNav-item svg { fill: var(--gh-text-muted); width: 16px; height: 16px; }
+        .repo-count { background: rgba(110,118,129,0.4); border-radius: 2em; padding: 0 6px; font-size: 12px; font-weight: 500;}
+
+        /* --- REPOSITORY FILTER BAR --- */
+        .repo-filter-bar {
+            display: flex; gap: 16px; margin-bottom: 24px; align-items: center; flex-wrap: wrap;
+            padding-bottom: 16px; border-bottom: 1px solid var(--gh-border);
+        }
+        .local-search {
+            background: var(--gh-bg); border: 1px solid var(--gh-border);
+            padding: 6px 12px; border-radius: 6px; color: var(--gh-text-main);
+            width: 100%; max-width: 320px; font-size: 14px; outline: none; transition: border-color 0.2s;
+        }
+        .local-search:focus { border-color: var(--gh-link); box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3); }
+        .local-search::placeholder { color: var(--gh-text-muted); }
+        
+        .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-btn {
+            background: var(--gh-btn-bg); border: 1px solid var(--gh-border);
+            color: var(--gh-text-main); padding: 4px 14px; border-radius: 2em;
+            font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s;
+        }
+        .filter-btn:hover { background: var(--gh-btn-hover); }
+        .filter-btn.active { background: var(--gh-link); color: #fff; border-color: var(--gh-link); }
+
+        /* Repositories Grid */
+        .repo-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px;
+        }
+
+        /* Repo Card */
+        .repo-card {
+            border: 1px solid var(--gh-border); border-radius: 6px;
+            background: var(--gh-bg); display: flex; flex-direction: column; cursor: pointer;
+            transition: border-color 0.2s; overflow: hidden;
+        }
+        .repo-card:hover { border-color: var(--gh-text-muted); }
+        
+        .card-cover-image { width: 100%; height: 140px; object-fit: cover; border-bottom: 1px solid var(--gh-border); }
+        .repo-card-body { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
+        .repo-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 8px;}
+        .repo-title { font-size: 14px; font-weight: 600; color: var(--gh-link); word-break: break-word;}
+        .repo-badge { border: 1px solid var(--gh-border); color: var(--gh-text-muted); font-size: 12px; padding: 0 7px; border-radius: 2em; line-height: 18px; white-space: nowrap;}
+        
+        .repo-desc { color: var(--gh-text-muted); font-size: 12px; margin-bottom: 16px; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;}
+        
+        .repo-tags { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap;}
+        .topic-tag { 
+            font-size: 12px; font-weight: 500; padding: 0 10px; border-radius: 2em; line-height: 22px; white-space: nowrap;
+            background: rgba(56,139,253,0.1); color: var(--gh-link); 
+        }
+        /* Color tags from snippet */
+        .topic-tag.orange { background: rgba(240,136,62,0.1); color: var(--gh-orange); }
+        .topic-tag.green { background: rgba(46,160,67,0.1); color: var(--gh-green); }
+        .topic-tag.purple { background: rgba(188,140,255,0.1); color: #bc8cff; }
+
+        .repo-footer { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--gh-text-muted); flex-wrap: wrap;}
+        .lang-color { width: 12px; height: 12px; border-radius: 50%; display: inline-block; vertical-align: middle;}
+        .lang-python { background-color: var(--gh-yellow); }
+        .lang-sheets { background-color: var(--gh-link); }
+
+        /* Contribution Graph */
+        .contrib-graph { border: 1px solid var(--gh-border); border-radius: 6px; padding: 16px; margin-bottom: 40px; }
+        .contrib-title { font-size: 16px; font-weight: 400; margin-bottom: 8px; }
+        .graph-squares { display: flex; flex-wrap: wrap; gap: 3px; }
+        .g-sq { width: 11px; height: 11px; border-radius: 2px; background: #161b22; }
+        .g-l1 { background: #0e4429; } .g-l2 { background: #006d32; } .g-l3 { background: #26a641; } .g-l4 { background: #39d353; }
+
+        /* No Results Message */
+        .no-results { display: none; padding: 40px; text-align: center; color: var(--gh-text-muted); border: 1px dashed var(--gh-border); border-radius: 6px; grid-column: span 2;}
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: 0.2s; padding: 16px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: var(--gh-bg-secondary); border: 1px solid var(--gh-border); border-radius: 12px;
+            width: 100%; max-width: 600px; max-height: 90vh; display: flex; flex-direction: column;
+            transform: scale(0.98); transition: 0.2s;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        
+        .modal-header { padding: 16px; border-bottom: 1px solid var(--gh-border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-title { font-size: 16px; font-weight: 600; }
+        .close-btn { background: none; border: none; color: var(--gh-text-muted); cursor: pointer; padding: 4px; }
+        .close-btn svg { width: 16px; height: 16px; fill: currentColor;}
+
+        .modal-body { padding: 16px; overflow-y: auto; flex-grow: 1; }
+        .modal-img { width: 100%; height: auto; border-radius: 6px; margin-bottom: 16px; border: 1px solid var(--gh-border);}
+        .modal-desc { font-size: 14px; color: var(--gh-text-main); line-height: 1.5; }
+        
+        .modal-footer { padding: 16px; border-top: 1px solid var(--gh-border); display: flex; justify-content: flex-end; gap: 8px; }
+        .btn-cancel { background: var(--gh-btn-bg); border: 1px solid var(--gh-border); color: var(--gh-text-main); padding: 5px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; }
+        .btn-primary { background: var(--gh-btn-primary); border: 1px solid rgba(240,246,252,0.1); color: #fff; padding: 5px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; padding: 16px; }
+            .sidebar { width: 100%; }
+            .repo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="header-logo">
+                <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/profile.jpg" alt="Avatar" class="avatar">
+                <div class="vcard-names">
+                    <h1 class="vcard-fullname">Dhruv Ramani</h1>
+                    <h2 class="vcard-username">DhruvR-16</h2>
+                </div>
+            </div>
+            
+            <div class="user-profile-bio">
+                Data Analyst turning complex datasets into clear, actionable intelligence. I build scalable models and dashboards.
+            </div>
+            
+            <a href="mailto:dhruv.ramani2024@nst.rishihood.edu.in" class="btn-profile">Contact Me</a>
+            
+            <ul class="vcard-details">
+                <li>
+                    <svg viewBox="0 0 16 16"><path d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072v.001zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0l3.535-3.536zM8 9a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                    Newton School of Technology, India
+                </li>
+                <li>
+                    <svg viewBox="0 0 16 16"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+                    <a href="https://linkedin.com/in/dhruv-ramani1" target="_blank">linkedin.com/in/dhruv-ramani1</a>
+                </li>
+            </ul>
+
+            <div class="skills-section">
+                <h2>Technical Stack</h2>
+                <div class="skills-badges">
+                    <span class="badge">Python</span>
+                    <span class="badge">SQL</span>
+                    <span class="badge">Tableau</span>
+                    <span class="badge">Excel</span>
+                    <span class="badge">Pandas</span>
+                    <span class="badge">NumPy</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <nav class="UnderlineNav">
+                <div class="UnderlineNav-item">
+                    <svg viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path></svg>
+                    Repositories <span class="repo-count" id="repo-count-badge">3</span>
+                </div>
+            </nav>
+
+            <div class="repo-filter-bar">
+                <input type="text" id="repo-search" class="local-search" placeholder="Find a project...">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="sports">Sports</button>
+                    <button class="filter-btn" data-filter="healthcare">Healthcare</button>
+                </div>
+            </div>
+
+            <div class="repo-grid" id="repo-grid">
+                
+                <!-- Project 1: F1 Strategy -->
+                <div class="repo-card open-modal-btn" data-category="sports" data-title="F1 Race Strategy Intelligence" data-img="https://github.com/mitul-bhatia/Sec-A_g-4_F1_Race_Strategy_Intelligence/raw/main/assets/banner.png" data-link="https://github.com/mitul-bhatia/Sec-A_g-4_F1_Race_Strategy_Intelligence" data-desc="Analyzed 726,600+ records across 76 F1 seasons to quantify the impact of pit stop efficiency on Championship outcomes. Engineered KPIs like Grid-to-Finish Excellence Delta. Built Tableau dashboards comparing strategies.">
+                    <img src="https://github.com/mitul-bhatia/Sec-A_g-4_F1_Race_Strategy_Intelligence/raw/main/assets/banner.png" alt="F1 Banner" class="card-cover-image">
+                    <div class="repo-card-body">
+                        <div class="repo-header">
+                            <span class="repo-title">F1-Race-Strategy-Intelligence</span>
+                            <span class="repo-badge">Public</span>
+                        </div>
+                        <p class="repo-desc">Decoding the science behind every pit call, grid slot & championship point — 726K+ records, Tableau dashboards.</p>
+                        <div class="repo-tags">
+                            <span class="topic-tag">python</span>
+                            <span class="topic-tag orange">tableau</span>
+                            <span class="topic-tag">pandas</span>
+                            <span class="topic-tag green">sports-analytics</span>
+                        </div>
+                        <div class="repo-footer">
+                            <span><span class="lang-color lang-python"></span> Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: F1 Speed -->
+                <div class="repo-card open-modal-btn" data-category="sports" data-title="The Efficiency of Speed" data-img="https://images.unsplash.com/photo-1562113530-57ba467cea38?auto=format&fit=crop&w=800&q=80" data-link="https://github.com/mitul-bhatia/Section_A_G-4_The_Efficiency_of_Speed" data-desc="Investigated the Hybrid Era (2014–2025) to determine if races are won by raw track pace or pit lane execution. Merged 7 relational tables and engineered Pace Retention metrics.">
+                    <img src="https://images.unsplash.com/photo-1562113530-57ba467cea38?auto=format&fit=crop&w=800&q=80" alt="F1 Speed" class="card-cover-image">
+                    <div class="repo-card-body">
+                        <div class="repo-header">
+                            <span class="repo-title">The-Efficiency-of-Speed</span>
+                            <span class="repo-badge">Public</span>
+                        </div>
+                        <p class="repo-desc">F1 Hybrid Era win factor investigation (pace vs pit execution) across 7 relational tables.</p>
+                        <div class="repo-tags">
+                            <span class="topic-tag">python</span>
+                            <span class="topic-tag orange">tableau</span>
+                            <span class="topic-tag">scipy</span>
+                            <span class="topic-tag green">etl-pipeline</span>
+                        </div>
+                        <div class="repo-footer">
+                            <span><span class="lang-color lang-python"></span> Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Hospital -->
+                <div class="repo-card open-modal-btn" data-category="healthcare" data-title="Hospital Readmission Optimizer" data-img="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" data-link="https://github.com/mitul-bhatia/SectionA_Group-16_optimize-hospital-readmission" data-desc="Analyzed 14,116 patient records identifying $20.5M leakage and care improvement strategies. Built Google Sheets dashboard with dynamic filters.">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Healthcare" class="card-cover-image">
+                    <div class="repo-card-body">
+                        <div class="repo-header">
+                            <span class="repo-title">Hospital-Readmission-Optimizer</span>
+                            <span class="repo-badge">Public</span>
+                        </div>
+                        <p class="repo-desc">14,116 patient records identifying $20.5M leakage and care improvement strategies.</p>
+                        <div class="repo-tags">
+                            <span class="topic-tag green">google-sheets</span>
+                            <span class="topic-tag">excel</span>
+                            <span class="topic-tag purple">healthcare-analytics</span>
+                        </div>
+                        <div class="repo-footer">
+                            <span><span class="lang-color lang-sheets"></span> Google Sheets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="no-results" id="no-results-msg">No repositories match your search or filter.</div>
+            </div>
+
+            <div class="contrib-graph">
+                <div class="contrib-title">contribution activity · 2025 – 2026</div>
+                <div class="graph-squares" id="contrib-grid">
+                    <script>
+                        const cg = document.getElementById('contrib-grid');
+                        const cls = ['','g-l1','g-l2','','','g-l3','','g-l4','g-l1'];
+                        for (let i = 0; i < 200; i++) {
+                            const d = document.createElement('div');
+                            d.className = 'g-sq ' + cls[Math.floor(Math.random() * cls.length)];
+                            cg.appendChild(d);
+                        }
+                    </script>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="m-title">Project Title</div>
+                <button class="close-btn" id="close-modal">
+                    <svg viewBox="0 0 16 16"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="m-img" alt="Project Cover" class="modal-img">
+                <p class="modal-desc" id="m-desc"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="cancel-modal">Close</button>
+                <a href="#" target="_blank" class="btn-primary" id="m-link">View Repository</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search & Filter
+        const searchInput = document.getElementById('repo-search');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const repoCards = document.querySelectorAll('.repo-card');
+        const repoCountBadge = document.getElementById('repo-count-badge');
+        const noResultsMsg = document.getElementById('no-results-msg');
+
+        let currentSearchTerm = '';
+        let currentFilter = 'all';
+
+        function filterRepositories() {
+            let visibleCount = 0;
+            repoCards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const desc = card.getAttribute('data-desc').toLowerCase();
+                const category = card.getAttribute('data-category');
+                const matchesSearch = title.includes(currentSearchTerm) || desc.includes(currentSearchTerm);
+                const matchesFilter = currentFilter === 'all' || category === currentFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            repoCountBadge.innerText = visibleCount;
+            noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value.toLowerCase();
+            filterRepositories();
+        });
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                filterRepositories();
+            });
+        });
+
+        // Modal
+        const modal = document.getElementById('modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const cancelModalBtn = document.getElementById('cancel-modal');
+        const mTitle = document.getElementById('m-title');
+        const mDesc = document.getElementById('m-desc');
+        const mImg = document.getElementById('m-img');
+        const mLink = document.getElementById('m-link');
+
+        repoCards.forEach(project => {
+            project.addEventListener('click', () => {
+                mTitle.textContent = project.getAttribute('data-title');
+                mDesc.textContent = project.getAttribute('data-desc');
+                mImg.src = project.getAttribute('data-img');
+                mLink.href = project.getAttribute('data-link');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; 
+            });
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; 
+        };
+
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+</html>
